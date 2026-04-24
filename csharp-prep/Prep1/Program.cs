@@ -1,9 +1,10 @@
-using System;
+string firstName;
+string lastName;
 
-class Program
-{
-    static void Main(string[] args)
-    {
-        Console.WriteLine("Hello Prep1 World!");
-    }
-}
+Console.Write("What is your first name? ");
+firstName = Console.ReadLine();
+
+Console.Write("What is your last name? ");
+lastName = Console.ReadLine();
+
+Console.WriteLine($"\nYour name is {firstName}, {firstName} {lastName}.");
