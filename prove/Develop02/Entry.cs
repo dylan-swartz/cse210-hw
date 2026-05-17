@@ -1,11 +1,12 @@
 public class Entry
 {
-    // Member variables — store the data for one entry
+    // Member variables
     private string _date;
     private string _prompt;
     private string _response;
+    public string Date => _date;
 
-    // Constructor — called when you do: new Entry(date, prompt, response)
+    // Constructor
     public Entry(string date, string prompt, string response)
     {
         _date = date;

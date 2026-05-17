@@ -17,7 +17,7 @@ class Program
 
             string choice = Console.ReadLine();
 
-            // Call the right Journal method based on user's choice
+            // Call the journal that is called by the user
             switch (choice)
             {
                 case "1": journal.WriteEntry(); break;

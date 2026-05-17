@@ -11,7 +11,35 @@ public class Journal
         "What am I grateful for today?"
     };
 
-    // Picks a random prompt, gets response, saves as new Entry
+    // Counts how many consecutive days (ending today) have at least one entry
+    private int GetStreak()
+    {
+        int streak = 0;
+        DateTime check = DateTime.Today;
+
+        while (true)
+        {
+            string checkStr = check.ToShortDateString();
+            bool found = false;
+
+            foreach (Entry entry in _entries)
+            {
+                if (entry.Date == checkStr)
+                {
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found) break;
+            streak++;
+            check = check.AddDays(-1);
+        }
+
+        return streak;
+    }
+
+    // Picks a random prompt, gets response, saves as new Entry, then shows streak
     public void WriteEntry()
     {
         Random random = new Random();
@@ -22,6 +50,12 @@ public class Journal
         string response = Console.ReadLine();
 
         _entries.Add(new Entry(date, prompt, response));
+
+        int streak = GetStreak();
+        if (streak > 1)
+            Console.WriteLine($"{streak}-day streak! Keep it up!");
+        else
+            Console.WriteLine("Entry saved! Come back tomorrow to start a streak.");
     }
 
     // Loops through entries and prints each one
@@ -33,7 +67,7 @@ public class Journal
         }
     }
 
-    // Saves all entries to a file, one line each
+    // Saves all entries to a file and separates each line with the response
     public void SaveToFile(string filename)
     {
         using StreamWriter writer = new StreamWriter(filename);
@@ -43,7 +77,7 @@ public class Journal
         }
     }
 
-    // Clears current entries, reads file and rebuilds them
+    // Clears entries, reads file and rebuilds them
     public void LoadFromFile(string filename)
     {
         _entries.Clear();
